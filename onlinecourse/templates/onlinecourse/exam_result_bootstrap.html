@@ -52,7 +52,7 @@
                 <div class="card mt-1">
                     <div class="card-header"><h5>{{question.question_text}}</h5></div>
                     <div class="form-group">
-                        {% for choice in question.choice_set.all %}
+                        {% for choice in selected %}
                         {% if choice.question_id == question.pk %}
 
                         {% if choice.is_correct %}
@@ -60,11 +60,22 @@
                             Correct answer: {{choice.choice_text}}
                         </div>
                         {% else %}
+                        <div style="color:red">
                             {{choice.choice_text}}
+                        </div>
                         {% endif %}
 
                         {% endif %}
                         {% endfor %}
+
+                        {% for choice in not_selected %}
+                        {% if choice.question_id == question.pk %}
+                        <div style="color:yellow">
+                            Not selected: {{choice.choice_text}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+ 
                     </div>
                 </div>
                 {% endfor %}

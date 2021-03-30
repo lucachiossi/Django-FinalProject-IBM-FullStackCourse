@@ -107,6 +107,10 @@ class Question(models.Model):
             return True
         else:
             return False
+    def not_selected(self, selected_ids, not_selected):
+        missing = self.choice_set.filter(is_correct=True).exclude(id__in=selected_ids)
+        for el in missing:
+            not_selected.append(el)
 
 # Choice model
 class Choice(models.Model):
