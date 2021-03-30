@@ -1,9 +1,6 @@
 from django.contrib import admin
 from .models import Course, Lesson, Instructor, Learner, Question, Choice, Submission, Enrollment
 
-# <HINT> Register QuestionInline and ChoiceInline classes here
-
-
 class LessonInline(admin.StackedInline):
     model = Lesson
     extra = 5
