@@ -99,13 +99,14 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200, default="question text")
     grade = models.IntegerField(default=0)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    # def is_get_score(self, selected_ids):
-    #     all_answers = self.choice_set.filter(is_correct=True).count()
-    #     selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
-    #     if all_answers == selected_correct:
-    #         return True
-    #     else:
-    #         return False
+    def is_get_score(self, selected_ids):
+        all_answers = self.choice_set.filter(is_correct=True).count()
+        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
+        selected_wrong = self.choice_set.filter(is_correct=False, id__in=selected_ids).count()
+        if all_answers == selected_correct and selected_wrong == 0:
+            return True
+        else:
+            return False
 
 # Choice model
 class Choice(models.Model):

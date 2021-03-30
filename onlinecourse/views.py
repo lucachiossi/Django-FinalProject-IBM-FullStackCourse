@@ -130,5 +130,10 @@ def show_exam_result(request, course_id, submission_id):
     context = {}
     course = Course.objects.get(pk=course_id)
     submission = Submission.objects.get(pk=submission_id)
+    grade = 0
+    for question in course.question_set.all():
+        if question.is_get_score(submission.chocies.values_list('pk', flat=True)):
+            grade += question.grade
     context['course'] = course
+    context['grade'] = grade
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
